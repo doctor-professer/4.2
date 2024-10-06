@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"> <!-- Sets the character encoding for the document -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Ensures responsive design on mobile devices -->
+    <title>Slot Machine - Casino Fun</title> <!-- Title of the page -->
+    <style>
+        body {
+            font-family: Arial, sans-serif; /* Sets the font for the body */
+            background-color: #eee; /* Light gray background color */
+            margin: 0; /* Removes default margin */
+            padding: 0; /* Removes default padding */
+        }
+        header {
+            background-color: #c0392b; /* Dark red background for the header */
+            color: white; /* White text color */
+            padding: 10px 0; /* Padding for the header */
+            text-align: center; /* Centers the header text */
+        }
+        nav a {
+            margin: 0 15px; /* Space between navigation links */
+            color: white; /* White text color for links */
+            text-decoration: none; /* Removes underline from links */
+            font-weight: bold; /* Makes link text bold */
+        }
+        section {
+            padding: 20px; /* Padding for the main section */
+            text-align: center; /* Centers the section text */
+        }
+        footer {
+            background-color: #c0392b; /* Dark red background for the footer */
+            color: white; /* White text color */
+            text-align: center; /* Centers the footer text */
+            padding: 10px 0; /* Padding for the footer */
+            position: fixed; /* Fixes footer at the bottom of the page */
+            width: 100%; /* Full width footer */
+            bottom: 0; /* Positions footer at the bottom */
+        }
+        .reel {
+            font-size: 50px; /* Increases font size for symbols */
+            margin: 10px; /* Space around each reel */
+        }
+        #result {
+            font-size: 20px; /* Increases font size for result text */
+            margin: 20px 0; /* Space above and below result text */
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Slot Machine</h1> <!-- Main title for the Slot Machine game -->
+        <nav>
+            <a href="index.html">Home</a> <!-- Link to the home page -->
+            <a href="blackjack.html">Blackjack</a> <!-- Link to the Blackjack page -->
+            <a href="dice_game.html">Dice Game</a> <!-- Link to the Dice Game page -->
+            <a href="slot_machine.html">Slot Machine</a> <!-- Link to the current page -->
+        </nav>
+    </header>
+
+    <section>
+        <h2>Spin the Reels!</h2> <!-- Subheading for the Slot Machine game -->
+        <div>
+            <span class="reel" id="reel1">🍒</span> <!-- First reel symbol -->
+            <span class="reel" id="reel2">🍒</span> <!-- Second reel symbol -->
+            <span class="reel" id="reel3">🍒</span> <!-- Third reel symbol -->
+        </div>
+        <button onclick="spin()">Spin</button> <!-- Button to spin the reels -->
+        <div id="result"></div> <!-- Div to display the result of the spin -->
+    </section>
+
+    <footer>
+        <p>&copy; 2024 Casino Fun | All Rights Reserved</p> <!-- Copyright notice -->
+    </footer>
+
+    <script>
+        const symbols = ['🍒', '🍊', '🍋', '🔔', '💰', '🍀']; // Array of possible slot machine symbols
+
+        function spin() {
+            // Generate random symbols for each reel
+            const reel1 = symbols[Math.floor(Math.random() * symbols.length)]; // Random symbol for reel 1
+            const reel2 = symbols[Math.floor(Math.random() * symbols.length)]; // Random symbol for reel 2
+            const reel3 = symbols[Math.floor(Math.random() * symbols.length)]; // Random symbol for reel 3
+
+            // Display the results on the page
+            document.getElementById('reel1').innerText = reel1; // Update reel 1 display
+            document.getElementById('reel2').innerText = reel2; // Update reel 2 display
+            document.getElementById('reel3').innerText = reel3; // Update reel 3 display
+
+            // Check for winning condition
+            if (reel1 === reel2 && reel2 === reel3) {
+                document.getElementById('result').innerText = 'You Win! 🎉'; // Display win message
+            } else {
+                document.getElementById('result').innerText = 'Try Again!'; // Display try again message
+            }
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"> <!-- Sets the character encoding for the document -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Ensures responsive design on mobile devices -->
+    <title>Blackjack - Casino Fun</title> <!-- Title of the page -->
+    <style>
+        body {
+            font-family: Arial, sans-serif; /* Sets the font for the body */
+            background-color: #eee; /* Light gray background color */
+            margin: 0; /* Removes default margin */
+            padding: 0; /* Removes default padding */
+        }
+        header {
+            background-color: #c0392b; /* Dark red background for the header */
+            color: white; /* White text color */
+            padding: 10px 0; /* Padding for the header */
+            text-align: center; /* Centers the header text */
+        }
+        nav a {
+            margin: 0 15px; /* Space between navigation links */
+            color: white; /* White text color for links */
+            text-decoration: none; /* Removes underline from links */
+            font-weight: bold; /* Makes link text bold */
+        }
+        section {
+            padding: 20px; /* Padding for the main section */
+            text-align: center; /* Centers the section text */
+        }
+        footer {
+            background-color: #c0392b; /* Dark red background for the footer */
+            color: white; /* White text color */
+            text-align: center; /* Centers the footer text */
+            padding: 10px 0; /* Padding for the footer */
+            position: fixed; /* Fixes footer at the bottom of the page */
+            width: 100%; /* Full width footer */
+            bottom: 0; /* Positions footer at the bottom */
+        }
+        #result {
+            font-size: 20px; /* Increases font size for result text */
+            margin: 20px 0; /* Space above and below result text */
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Blackjack</h1> <!-- Main title for the Blackjack game -->
+        <nav>
+            <a href="index.html">Home</a> <!-- Link to the home page -->
+            <a href="blackjack.html">Blackjack</a> <!-- Link to the current page -->
+            <a href="dice_game.html">Dice Game</a> <!-- Link to the Dice Game page -->
+            <a href="slot_machine.html">Slot Machine</a> <!-- Link to the Slot Machine page -->
+        </nav>
+    </header>
+
+    <section>
+        <h2>How to Play Blackjack</h2> <!-- Subheading for game instructions -->
+        <p>Try to get as close to 21 without going over. You can hit to draw more cards or hold to stop.</p>
+        <button onclick="startGame()">Start Game</button> <!-- Button to start the game -->
+        <button onclick="hit()" style="display:none;" id="hitButton">Hit</button> <!-- Button to hit (initially hidden) -->
+        <button onclick="hold()" style="display:none;" id="holdButton">Hold</button> <!-- Button to hold (initially hidden) -->
+        <div id="result"></div> <!-- Div to display the result of the game -->
+    </section>
+
+    <footer>
+        <p>&copy; 2024 Casino Fun | All Rights Reserved</p> <!-- Copyright notice -->
+    </footer>
+
+    <script>
+        let playerScore = 0; // Variable to hold the player's score
+        let dealerScore = 0; // Variable to hold the dealer's score
+        let gameInProgress = false; // Flag to check if the game is in progress
+
+        function startGame() {
+            playerScore = drawCard() + drawCard(); // Draw two cards for the player
+            dealerScore = drawCard(); // Draw one card for the dealer
+            gameInProgress = true; // Set the game as in progress
+            document.getElementById('hitButton').style.display = 'inline'; // Show the hit button
+            document.getElementById('holdButton').style.display = 'inline'; // Show the hold button
+            updateResult(); // Update the result display
+        }
+
+        function drawCard() {
+            // Returns a random value between 1 and 11 (simulating a card draw)
+            return Math.floor(Math.random() * 11) + 1; 
+        }
+
+        function hit() {
+            if (gameInProgress) { // Only allow hitting if the game is in progress
+                playerScore += drawCard(); // Draw another card for the player
+                updateResult(); // Update the result display
+                if (playerScore > 21) { // Check for bust
+                    document.getElementById('result').innerText = 'You bust! Your score: ' + playerScore; // Notify bust
+                    gameInProgress = false; // End the game
+                    document.getElementById('hitButton').style.display = 'none'; // Hide the hit button
+                    document.getElementById('holdButton').style.display = 'none'; // Hide the hold button
+                }
+            }
+        }
+
+        function hold() {
+            if (gameInProgress) { // Only allow holding if the game is in progress
+                dealerTurn(); // Proceed to dealer's turn
+            }
+        }
+
+        function dealerTurn() {
+            // Simulate the dealer's turn by drawing cards until reaching at least 17
+            while (dealerScore < 17) {
+                dealerScore += drawCard(); // Draw a card for the dealer
+            }
+            determineWinner(); // Determine the winner after the dealer's turn
+        }
+
+        function determineWinner() {
+            // Check who wins based on the scores
+            if (dealerScore > 21) {
+                document.getElementById('result').innerText = 'Dealer busts! You win!'; // Dealer busts
+            } else if (playerScore > dealerScore) {
+                document.getElementById('result').innerText = 'You win! Your score: ' + playerScore; // Player wins
+            } else if (playerScore < dealerScore) {
+                document.getElementById('result').innerText = 'Dealer wins! Dealer score: ' + dealerScore; // Dealer wins
+            } else {
+                document.getElementById('result').innerText = 'It\'s a tie!'; // Tie case
+            }
+            gameInProgress = false; // End the game
+            document.getElementById('hitButton').style.display = 'none'; // Hide the hit button
+            document.getElementById('holdButton').style.display = 'none'; // Hide the hold button
+        }
+
+        function updateResult() {
+            // Display current scores of the player and dealer
+            document.getElementById('result').innerText = 'Your score: ' + playerScore + ' | Dealer score: ' + dealerScore;
+        }
+    </script>
+
+</body>
+</html>
